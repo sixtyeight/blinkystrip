@@ -8,10 +8,30 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 
-/** metalab blinkystrip settings **/
-#define BLINKYSTRIP1
+/** Select Metalab Blinkystrip setting **/
+#define CFG_BLINKYSTRIP1
 
-#ifdef BLINKYSTRIP1
+// Blinkystrip below kitchen counter
+#ifdef CFG_BLINKYSTRIP1
+  #define SENSORNAME "blinkystrip1"
+  #define NUM_LEDS    20
+#endif
+
+// Blinkystrip above WEL entrance
+#ifdef CFG_BLINKYSTRIP2
+  #define SENSORNAME  "blinkystrip2"
+  #define NUM_LEDS    43
+#endif
+
+// Blinkystrip TBD/WIP
+#ifdef CFG_BLINKYSTRIP3
+  #define SENSORNAME "blinkystrip3"
+  #define NUM_LEDS   100
+#endif
+
+#ifdef CFG_NO_BLINKYSTRIP
+  #define SENSORNAME "no-blinkystrip" //change this to whatever you want to call your device
+  #define NUM_LEDS   10 //change to match your setup
 #endif
 
 /************ WIFI and MQTT INFORMATION (CHANGE THESE FOR YOUR SETUP) ******************/
@@ -22,15 +42,13 @@
 #define mqtt_user "" //enter your MQTT username
 #define mqtt_password "" //enter your password
 
-#define SENSORNAME "blinkystrip" //change this to whatever you want to call your device
 #define OTApassword "" //the password you will need to enter to upload remotely via the ArduinoIDE
 int OTAport = 8266;
+
 /************ FastLED Defintions ******************/
-// D7
 #define DATA_PIN    D5 //on the NodeMCU 1.0, FastLED will default to the D5 pin after throwing an error during compiling. Leave as is. 
 #define LED_TYPE    WS2811 //change to match your LED type WS2812
 #define COLOR_ORDER GRB //change to match your LED configuration // RGB for 2811's | GRB for 2812's //
-#define NUM_LEDS    100 //change to match your setup // #2 = 43
 
 /****************************** MQTT TOPICS (change these topics as you wish)  ***************************************/
 // Customize this for your device
